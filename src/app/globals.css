@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+/* ============================================================
+   HATTA Safety — tokens de diseño
+   Vernáculo de señalización industrial: amarillo alta visibilidad
+   sobre grafito, franjas de peligro como firma visual.
+   ============================================================ */
+@theme {
+  --color-hatta: #ffc400;        /* amarillo HATTA / alta visibilidad */
+  --color-hatta-dark: #e0a800;
+  --color-ink: #17191c;          /* grafito casi negro */
+  --color-ink-soft: #23262b;
+  --color-paper: #f6f5f2;        /* fondo claro neutro */
+  --color-line: #e3e1db;
+  --color-risk-low: #2e9e5b;
+  --color-risk-med: #e08700;
+  --color-risk-high: #d64545;
+  --color-risk-critical: #8b1e3f;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Firma visual: franja de peligro (amarillo/negro) */
+.hazard-stripe {
+  height: 6px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--color-hatta),
+    var(--color-hatta) 12px,
+    var(--color-ink) 12px,
+    var(--color-ink) 24px
+  );
+}
+
+/* Foco visible para accesibilidad */
+:focus-visible {
+  outline: 3px solid var(--color-hatta);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
