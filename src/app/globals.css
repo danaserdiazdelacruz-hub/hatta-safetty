@@ -1,54 +1,74 @@
 @import "tailwindcss";
 
 /* ============================================================
-   HATTA Safety — tokens de diseño
-   Vernáculo de señalización industrial: amarillo alta visibilidad
-   sobre grafito, franjas de peligro como firma visual.
+   HATTA Safety — sistema visual v2
+   Industrial serio: grafito profundo, amarillo alta visibilidad
+   como acento (no como relleno), jerarquía tipográfica fuerte.
    ============================================================ */
 @theme {
-  --color-hatta: #ffc400;        /* amarillo HATTA / alta visibilidad */
-  --color-hatta-dark: #e0a800;
-  --color-ink: #17191c;          /* grafito casi negro */
-  --color-ink-soft: #23262b;
-  --color-paper: #f6f5f2;        /* fondo claro neutro */
-  --color-line: #e3e1db;
-  --color-risk-low: #2e9e5b;
-  --color-risk-med: #e08700;
-  --color-risk-high: #d64545;
-  --color-risk-critical: #8b1e3f;
+  --color-hatta: #ffc400;
+  --color-hatta-dark: #e6b000;
+  --color-ink: #101214;          /* fondo base */
+  --color-ink-soft: #17191d;     /* superficie de tarjetas */
+  --color-ink-raise: #1e2126;    /* superficie elevada / inputs */
+  --color-edge: #2a2e34;         /* bordes sutiles */
+  --color-paper: #f2f1ed;        /* texto principal */
+  --color-muted: #8b909a;        /* texto secundario */
+  --color-risk-low: #34b56a;
+  --color-risk-med: #f0a020;
+  --color-risk-high: #e05252;
+  --color-risk-critical: #c02a55;
 
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    sans-serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-paper);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
-/* Firma visual: franja de peligro (amarillo/negro) */
+/* Franja de peligro — firma de marca, fina y precisa */
 .hazard-stripe {
-  height: 6px;
+  height: 5px;
   background: repeating-linear-gradient(
     -45deg,
-    var(--color-hatta),
-    var(--color-hatta) 12px,
-    var(--color-ink) 12px,
-    var(--color-ink) 24px
+    var(--color-hatta) 0 10px,
+    var(--color-ink) 10px 20px
   );
 }
 
-/* Foco visible para accesibilidad */
+/* Tarjeta estándar */
+.card {
+  background: var(--color-ink-soft);
+  border: 1px solid var(--color-edge);
+  border-radius: 14px;
+}
+
+/* Etiqueta de sección estilo industrial */
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Número grande de KPI */
+.kpi-number {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
 :focus-visible {
-  outline: 3px solid var(--color-hatta);
+  outline: 2px solid var(--color-hatta);
   outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
+  * { animation: none !important; transition: none !important; }
 }

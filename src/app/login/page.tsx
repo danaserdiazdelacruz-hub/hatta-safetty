@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { HardHat, LoaderCircle } from "lucide-react";
+import { HardHat, LoaderCircle, ShieldCheck } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -16,15 +16,10 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-
     const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
-      setError("Correo o contraseña incorrectos. Verifica e intenta de nuevo.");
+      setError("Correo o contraseña incorrectos.");
       setLoading(false);
       return;
     }
@@ -33,31 +28,27 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-dvh bg-ink flex flex-col">
+    <main className="min-h-dvh flex flex-col">
       <div className="hazard-stripe" />
 
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-sm">
-          <div className="flex items-center gap-3 mb-10">
-            <div className="bg-hatta text-ink rounded-lg p-2.5">
-              <HardHat size={28} strokeWidth={2.25} />
+          {/* Marca */}
+          <div className="flex flex-col items-center text-center mb-10">
+            <div className="bg-hatta text-ink rounded-2xl p-4 mb-4 shadow-[0_0_40px_rgba(255,196,0,0.15)]">
+              <HardHat size={34} strokeWidth={2.25} />
             </div>
-            <div>
-              <h1 className="text-paper text-2xl font-bold tracking-tight">
-                HATTA <span className="text-hatta">Safety</span>
-              </h1>
-              <p className="text-paper/50 text-sm">
-                Seguridad industrial en tiempo real
-              </p>
-            </div>
+            <h1 className="text-3xl font-extrabold tracking-tight">
+              HATTA <span className="text-hatta">Safety</span>
+            </h1>
+            <p className="text-muted text-sm mt-1.5">
+              Reporta. Corrige. Previene.
+            </p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="card p-6 space-y-4">
             <div>
-              <label
-                htmlFor="email"
-                className="block text-paper/70 text-sm mb-1.5"
-              >
+              <label htmlFor="email" className="section-label block mb-2">
                 Correo
               </label>
               <input
@@ -67,15 +58,12 @@ export default function LoginPage() {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-lg bg-ink-soft text-paper px-4 py-3 border border-paper/10 placeholder:text-paper/30"
+                className="w-full rounded-xl bg-ink-raise px-4 py-3.5 border border-edge placeholder:text-muted/50 focus:border-hatta transition-colors"
                 placeholder="tu@empresa.com"
               />
             </div>
             <div>
-              <label
-                htmlFor="password"
-                className="block text-paper/70 text-sm mb-1.5"
-              >
+              <label htmlFor="password" className="section-label block mb-2">
                 Contraseña
               </label>
               <input
@@ -85,12 +73,12 @@ export default function LoginPage() {
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-lg bg-ink-soft text-paper px-4 py-3 border border-paper/10"
+                className="w-full rounded-xl bg-ink-raise px-4 py-3.5 border border-edge focus:border-hatta transition-colors"
               />
             </div>
 
             {error && (
-              <p className="text-risk-high text-sm bg-risk-high/10 rounded-lg px-3 py-2">
+              <p className="text-risk-high text-sm bg-risk-high/10 border border-risk-high/20 rounded-xl px-3.5 py-2.5">
                 {error}
               </p>
             )}
@@ -98,12 +86,17 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-hatta hover:bg-hatta-dark text-ink font-bold rounded-lg py-3.5 flex items-center justify-center gap-2 disabled:opacity-60"
+              className="w-full bg-hatta hover:bg-hatta-dark active:scale-[0.99] text-ink font-bold rounded-xl py-4 flex items-center justify-center gap-2 disabled:opacity-60 transition-all"
             >
               {loading && <LoaderCircle className="animate-spin" size={18} />}
               Entrar
             </button>
           </form>
+
+          <p className="flex items-center justify-center gap-1.5 text-muted text-xs mt-6">
+            <ShieldCheck size={14} />
+            Plataforma EHS multiempresa · Datos aislados por compañía
+          </p>
         </div>
       </div>
 
